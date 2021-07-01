@@ -48,20 +48,15 @@ class SHRIWebpackPlugin {
     apply(compiler) {
         const pluginName = SHRIWebpackPlugin.name
 
-        compiler.hooks.compilation.tap(pluginName, (compilation) => {
-
-            compilation.hooks.finishModules.tapPromise(pluginName, async (modules) => {
-                const filesSet = await findFilesInDir(this.options.src, {
-                    exclude: this.options.exclude,
-                    include: this.options.include
-                })
-                for (const module of modules) {
-                    filesSet.delete(module.resource)
-                }
-                const files = Array.from(filesSet).map(file => path.relative(process.cwd(), file))
-                await writeToJSON(files, this.options.outputFile)
+        compiler.hooks.afterEmit.tapPromise(pluginName, async (compilation) => {
+            const filesSet = await findFilesInDir(this.options.src, {
+                exclude: this.options.exclude,
+                include: this.options.include
             })
 
+            compilation.fileDependencies.forEach(path => filesSet.delete(path))
+            const files = Array.from(filesSet).map(file => path.relative(process.cwd(), file))
+            await writeToJSON(files, this.options.outputFile)
         })
     }
 }

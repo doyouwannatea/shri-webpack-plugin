@@ -66,7 +66,7 @@ const config = {
         new SHRIWebpackPlugin({
             outputFile: 'unused.json',
             src: paths.src,
-            include: /\.(js|jsx)$/
+            include: /\.(js|jsx|css|scss)$/
         })
     ]
 }

@@ -1,8 +1,7 @@
 const path = require('path')
 const { readdir, stat } = require('fs/promises')
 
-async function findJSFilesInDir(root, { exclude = [] }) {
-    const jsFile = /\.(js|jsx|ts|tsx)$/
+async function findFilesInDir(root, { exclude = [], include }) {
     const files = new Set()
 
     if (!(await stat(root)).isDirectory())
@@ -25,7 +24,8 @@ async function findJSFilesInDir(root, { exclude = [] }) {
                     continue
                 }
 
-                if (!jsFile.test(fileName)) continue
+                if (include && !new RegExp(include).test(fileName)) continue
+
                 files.add(filePath)
             }
         } catch (error) {
@@ -37,4 +37,4 @@ async function findJSFilesInDir(root, { exclude = [] }) {
     return files
 }
 
-module.exports = findJSFilesInDir
+module.exports = findFilesInDir

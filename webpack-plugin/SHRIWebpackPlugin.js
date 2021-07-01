@@ -1,6 +1,6 @@
 const path = require('path')
 const { validate } = require('schema-utils')
-const findJSFilesInDir = require('./helpers/findJSFilesInDir')
+const findFilesInDir = require('./helpers/findFilesInDir')
 const writeToJSON = require('./helpers/writeToJSON')
 
 // schema for options object
@@ -15,6 +15,12 @@ const schema = {
         },
         exclude: {
             type: 'array'
+        },
+        include: {
+            anyOf: [
+                { type: 'string' },
+                { instanceof: 'RegExp' }
+            ]
         }
     }
 }
@@ -22,7 +28,8 @@ const schema = {
 const initialOptions = {
     src: '',
     outputFile: '',
-    exclude: []
+    exclude: [],
+    include: ''
 }
 
 class SHRIWebpackPlugin {
@@ -44,8 +51,9 @@ class SHRIWebpackPlugin {
         compiler.hooks.compilation.tap(pluginName, (compilation) => {
 
             compilation.hooks.finishModules.tapPromise(pluginName, async (modules) => {
-                const filesSet = await findJSFilesInDir(this.options.src, {
-                    exclude: this.options.exclude
+                const filesSet = await findFilesInDir(this.options.src, {
+                    exclude: this.options.exclude,
+                    include: this.options.include
                 })
                 for (const module of modules) {
                     filesSet.delete(module.resource)

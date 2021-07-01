@@ -4,17 +4,19 @@
 
 ## Плагин
 
-```js
+```ts
 new SHRIWebpackPlugin({
-    outputFile: '',
-    src: '',
-    exclude: []
+    outputFile: string,
+    src: string,
+    exclude?: Array<string>,
+    include?: RegExp | string
 })
 ```
 
 `outputFile` - В какой файл вывести статистику.  
 `src` - В какой директории начинаются файлы проекта.  
 `exclude` - Какие файлы не добавлять в статистику.  
+`include` - Какие файлы добавить в статистику.
 
 Плагин настроен на файлы .js, .jsx, .ts, .tsx.  
 
@@ -27,3 +29,7 @@ new SHRIWebpackPlugin({
 `git clone https://github.com/doyouwannatea/shri-webpack-plugin`  
 `npm i`  
 `npm run build`  
+
+## Node version
+
+v14.17.1

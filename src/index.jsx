@@ -9,6 +9,8 @@ import App from './containers/App'
 const store = createStore(rootReducer)
 const root = document.getElementById('root')
 
+import './styles/style.scss'
+
 ReactDOM.render(
     <Provider store={store}>
         <App />

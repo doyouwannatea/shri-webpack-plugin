@@ -38,7 +38,7 @@ const config = {
                 ]
             },
             {
-                test: /\.(png|jpe?g|gif)$/i,
+                test: /\.(png|jpe?g|gif|svg)$/i,
                 use: [
                     {
                         loader: 'file-loader',
@@ -65,7 +65,8 @@ const config = {
         }),
         new SHRIWebpackPlugin({
             outputFile: 'unused.json',
-            src: paths.src
+            src: paths.src,
+            include: /\.(js|jsx)$/
         })
     ]
 }

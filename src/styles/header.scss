@@ -1,0 +1,20 @@
+.header {
+    padding: 13px 0;
+    box-shadow: $main-shadow;
+    background-color: #fff;
+    position: relative;
+    z-index: 15;
+
+    animation: $bounce-in, $appearance;
+
+    &__logo {
+        min-width: 200px;
+        height: 55px;
+        background: url(../../assets/images/logo-with-text.svg) center / cover no-repeat;
+        text-decoration: none;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

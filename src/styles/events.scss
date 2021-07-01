@@ -1,0 +1,10 @@
+.events {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    z-index: 15;
+
+    & .rah-static,
+    .rah-animating {
+        box-shadow: $main-shadow;
+    }
+}
